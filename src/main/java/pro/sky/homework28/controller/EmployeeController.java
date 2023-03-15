@@ -1,5 +1,6 @@
 package pro.sky.homework28.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.homework28.domain.Employee;
@@ -34,14 +35,17 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
+    @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping("/add")
     public Employee add(@RequestParam("firstName") String firstName,
-                        @RequestParam("lastName") String lastName) {
-        return employeeService.add(firstName, lastName);
+                        @RequestParam("lastName") String lastName,
+                        @RequestParam("salary") double salary,
+                        @RequestParam("id") int id) {
+        return employeeService.add(firstName, lastName, salary, id);
     }
 
     @GetMapping("/find")
