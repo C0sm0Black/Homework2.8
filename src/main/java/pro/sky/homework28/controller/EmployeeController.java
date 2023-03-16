@@ -22,14 +22,8 @@ public class EmployeeController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(EmployeeStorageIsFullException.class)
-    public String handlerException(EmployeeStorageIsFullException e) {
-        return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(EmployeeAlreadyAddedException.class)
-    public String handlerException(EmployeeAlreadyAddedException e) {
+    @ExceptionHandler({EmployeeStorageIsFullException.class, EmployeeAlreadyAddedException.class})
+    public String handlerException(RuntimeException e) {
         return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 

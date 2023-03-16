@@ -69,20 +69,7 @@ public class EmployeeService {
     public Employee remove(String firstName, String lastName) {
 
         Employee employee = find(firstName, lastName);
-        int x = -1;
-
-        for (int i = 0; i < employees.size(); i++) {
-
-            if (employees.get(i).equals(employee)) {
-
-                x = i;
-                employee = employees.get(i);
-
-            }
-
-        }
-
-        employees.remove(x);
+        employees.removeIf(e -> e.equals(employee));
         return employee;
 
     }
