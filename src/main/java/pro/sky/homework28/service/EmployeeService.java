@@ -1,11 +1,13 @@
 package pro.sky.homework28.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.homework28.domain.Department;
 import pro.sky.homework28.domain.Employee;
 import pro.sky.homework28.exception.EmployeeAlreadyAddedException;
 import pro.sky.homework28.exception.EmployeeNotFoundException;
 import pro.sky.homework28.exception.EmployeeStorageIsFullException;
+import pro.sky.homework28.exception.WrongEmployeeDataException;
 
 
 import java.util.ArrayList;
@@ -42,6 +44,10 @@ public class EmployeeService {
 
     public Employee add(String firstName, String lastName, double salary, int id) {
 
+        checkFirstNameAndLastNameForEmpty(firstName, lastName);
+        checkFirstNameAndLastNameForUpperCase(firstName, lastName);
+        checkFirstNameAndLastNameForAlpha(firstName, lastName);
+
         if (employees.size() > MAX_COUNT_EMPLOYEES - 1) {
             throw new EmployeeStorageIsFullException("Массив сотрудников переполнен");
         }
@@ -59,6 +65,10 @@ public class EmployeeService {
 
     public Employee find(String firstName, String lastName) {
 
+        checkFirstNameAndLastNameForEmpty(firstName, lastName);
+        checkFirstNameAndLastNameForUpperCase(firstName, lastName);
+        checkFirstNameAndLastNameForAlpha(firstName, lastName);
+
         return employees.stream()
                 .filter(e -> e.getFirstName().equals(firstName) && e.getLastName().equals(lastName))
                 .findAny()
@@ -68,6 +78,10 @@ public class EmployeeService {
 
     public Employee remove(String firstName, String lastName) {
 
+        checkFirstNameAndLastNameForEmpty(firstName, lastName);
+        checkFirstNameAndLastNameForUpperCase(firstName, lastName);
+        checkFirstNameAndLastNameForAlpha(firstName, lastName);
+
         Employee employee = find(firstName, lastName);
         employees.removeIf(e -> e.equals(employee));
         return employee;
@@ -76,6 +90,32 @@ public class EmployeeService {
 
     public List<Employee> getAll() {
         return employees;
+    }
+
+    private void checkFirstNameAndLastNameForEmpty(String firstName, String lastName) {
+
+        if (StringUtils.isEmpty(firstName) || StringUtils.isEmpty(lastName)) {
+            throw new WrongEmployeeDataException("Имя или фамилия не могут быть пустыми!");
+        }
+
+    }
+
+    private void checkFirstNameAndLastNameForUpperCase(String firstName, String lastName) {
+
+        if (!firstName.equals(StringUtils.capitalize(StringUtils.lowerCase(firstName)))
+                || !lastName.equals(StringUtils.capitalize(StringUtils.lowerCase(lastName)))) {
+            throw new WrongEmployeeDataException("Имя или фамилия должны начинатся с заглавной буквы," +
+                    " и далее следовать маленькие!");
+        }
+
+    }
+
+    private void checkFirstNameAndLastNameForAlpha(String firstName, String lastName) {
+
+        if (StringUtils.isAlpha(firstName) || StringUtils.isAlpha(lastName)) {
+            throw new WrongEmployeeDataException("Имя или фамилия должны содержать только буквы!");
+        }
+
     }
 
 }
