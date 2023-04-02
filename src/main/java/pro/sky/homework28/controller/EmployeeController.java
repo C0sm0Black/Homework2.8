@@ -7,6 +7,7 @@ import pro.sky.homework28.domain.Employee;
 import pro.sky.homework28.exception.EmployeeAlreadyAddedException;
 import pro.sky.homework28.exception.EmployeeNotFoundException;
 import pro.sky.homework28.exception.EmployeeStorageIsFullException;
+import pro.sky.homework28.exception.WrongEmployeeDataException;
 import pro.sky.homework28.service.EmployeeService;
 
 import java.util.List;
@@ -22,7 +23,8 @@ public class EmployeeController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({EmployeeStorageIsFullException.class, EmployeeAlreadyAddedException.class})
+    @ExceptionHandler({EmployeeStorageIsFullException.class, EmployeeAlreadyAddedException.class
+            , WrongEmployeeDataException.class})
     public String handlerException(RuntimeException e) {
         return String.format("%s %s", HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
