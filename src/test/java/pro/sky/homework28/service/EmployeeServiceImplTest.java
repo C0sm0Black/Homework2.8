@@ -154,11 +154,9 @@ class EmployeeServiceImplTest {
 
         //Подготовка входных данных
 
-        employeeService.add("Олег", "Круглов", 25_000d, 1);
-
         String firstName = "Олег";
-        String lastName = "Круглов";
-        Double salary = 25_000d;
+        String lastName = "Коновалов";
+        Double salary = 48_150d;
         Department department = DEPARTMENT_BY_ID.get(1);
 
         //Подготовка ожидаемого результата
@@ -179,10 +177,10 @@ class EmployeeServiceImplTest {
 
         //Подготовка входных данных
 
-        String firstName = "Виктория";
-        String lastName = "Гончарова";
-        Double salary = 63_000d;
-        Department department = DEPARTMENT_BY_ID.get(1);
+        String firstName = "Рустам";
+        String lastName = "Магамедов";
+        Double salary = 71_060d;
+        Department department = DEPARTMENT_BY_ID.get(3);
 
         //Подготовка ожидаемого результата
 
